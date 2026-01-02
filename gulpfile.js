@@ -121,7 +121,7 @@ export function files(){
 
 export function imagesOrigin() {
     if(fs.existsSync('./src/images/')){
-        return gulp.src('./src/images/**/*.{webp,avif}', { encoding: false })
+        return gulp.src('./src/images/**/*.{webp,avif,svg}', { encoding: false })
         .pipe(gulpIf(!argv.prod, changed('./dist/images/'), {
             hasChanged: compareContents
         }))
@@ -147,19 +147,7 @@ export function imagesToWebp() {
     return Promise.resolve();
 }
 
-export function imagesSvg() {
-    if(fs.existsSync('./src/images/')){
-        return gulp.src('./src/images/**/*.svg', { encoding: false })
-        .pipe(gulpIf(!argv.prod, changed('./dist/images/', {
-            hasChanged: compareContents
-        })))
-        .pipe(gulp.dest('./dist/images/'))
-        .pipe(gulpIf(!argv.prod, browserSync.stream()));
-    }
-    return Promise.resolve();
-}
-
-export const images = gulp.parallel(imagesOrigin, imagesToWebp, imagesSvg);
+export const images = gulp.parallel(imagesOrigin, imagesToWebp);
 
 export function watcher(){
     const watchers = [
