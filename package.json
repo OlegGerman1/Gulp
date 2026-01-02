@@ -23,6 +23,7 @@
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser": "^2.1.0",
     "gulp-ttf2woff2": "^5.0.0",
+    "gulp-webp": "^5.1.0",
     "sass": "^1.93.2",
     "style-loader": "^4.0.0",
     "webpack-stream": "^7.0.0",
