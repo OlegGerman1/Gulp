@@ -81,6 +81,7 @@ export function css(){
     .pipe(gulpIf(argv.prod, csso()))
     .pipe(gulpIf(!argv.prod, sourceMap.write()))
     .pipe(gulp.dest('./dist/'))
+    // .pipe(gulp.dest('../'))
     .pipe(gulpIf(!argv.prod, browserSync.stream()));
 }
 
@@ -93,6 +94,7 @@ export function js(){
     .pipe(webpack(webpackConfig))
     //.pipe(gulpIf(argv.prod, terser()))
     .pipe(gulp.dest('./dist/js/'))
+    //.pipe(gulp.dest('../js/'))
     .pipe(gulpIf(!argv.prod, browserSync.stream()))
 }
 
