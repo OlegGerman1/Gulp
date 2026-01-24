@@ -81,7 +81,7 @@ export function css(){
     .pipe(gulpIf(argv.prod, csso()))
     .pipe(gulpIf(!argv.prod, sourceMap.write()))
     .pipe(gulp.dest('./dist/'))
-    // .pipe(gulp.dest('../'))
+    //.pipe(gulp.dest('../'))
     .pipe(gulpIf(!argv.prod, browserSync.stream()));
 }
 
@@ -101,9 +101,7 @@ export function js(){
 export function fonts(){
     if(fs.existsSync('./src/fonts/')){
         return gulp.src('./src/fonts/**/*.ttf', { encoding: false })
-        .pipe(gulpIf(!argv.prod, changed('./dist/fonts/', {
-            extension: '.woff2'
-        })))
+        .pipe(gulpIf(!argv.prod, changed('./dist/fonts/', { extension: '.woff2' })))
         .pipe(ttf2woff2())
         .pipe(gulp.dest('./dist/fonts/'))
         .pipe(gulpIf(!argv.prod, browserSync.stream()))
@@ -124,9 +122,7 @@ export function files(){
 export function imagesOrigin() {
     if(fs.existsSync('./src/images/')){
         return gulp.src('./src/images/**/*.{webp,avif,svg}', { encoding: false })
-        .pipe(gulpIf(!argv.prod, changed('./dist/images/'), {
-            hasChanged: compareContents
-        }))
+        .pipe(gulpIf(!argv.prod, changed('./dist/images/', { hasChanged: compareContents })))
         .pipe(gulp.dest('./dist/images/'))
         .pipe(gulpIf(!argv.prod, browserSync.stream()));
     }
@@ -136,9 +132,7 @@ export function imagesOrigin() {
 export function imagesToWebp() {
     if(fs.existsSync('./src/images/')){
         return gulp.src('./src/images/**/*.{jpg,jpeg,png}', { encoding: false })
-        .pipe(gulpIf(!argv.prod, changed('./dist/images/', {
-            extension: '.webp',
-        })))
+        .pipe(gulpIf(!argv.prod, changed('./dist/images/', { extension: '.webp' })))
         .pipe(webp({
             quality: 85,
             alphaQuality: 100
