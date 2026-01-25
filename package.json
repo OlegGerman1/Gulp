@@ -1,7 +1,8 @@
 {
   "devDependencies": {
-    "@babel/core": "^7.28.4",
-    "@babel/preset-env": "^7.28.3",
+    "@babel/core": "^7.28.6",
+    "@babel/preset-env": "^7.28.6",
+    "babel-loader": "^10.0.0",
     "browser-sync": "^3.0.4",
     "css-loader": "^7.1.2",
     "gulp": "^5.0.1",
@@ -19,7 +20,6 @@
     "gulp-notify": "^5.0.0",
     "gulp-plumber": "^1.2.1",
     "gulp-sass": "^6.0.1",
-    "gulp-sass-glob": "^1.1.0",
     "gulp-sourcemaps": "^3.0.0",
     "gulp-terser": "^2.1.0",
     "gulp-ttf2woff2": "^5.0.0",

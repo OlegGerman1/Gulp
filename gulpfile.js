@@ -11,7 +11,6 @@ import htmlmin from 'gulp-htmlmin';
 import gulpSass from "gulp-sass";
 import * as dartSass from "sass"
 const sass = gulpSass(dartSass);
-import sassGlob from 'gulp-sass-glob';
 import sourceMap from 'gulp-sourcemaps';
 import autoprefixer from 'gulp-autoprefixer';
 import mediaQueries from 'gulp-group-css-media-queries';
@@ -68,11 +67,10 @@ export function html(){
 }
 
 export function css(){
-    return gulp.src('./src/scss/*.scss')
+    return gulp.src('./src/scss/style.scss')
     .pipe(gulpIf(!argv.prod, changed('./dist/')))
     .pipe(gulpIf(!argv.prod, plumber(plumberNotify('SCSS'))))
     .pipe(gulpIf(!argv.prod, sourceMap.init({loadMaps: true})))
-    .pipe(sassGlob())
     .pipe(sass())
     .pipe(autoprefixer({
         overrideBrowserslist: ['last 3 versions'],
@@ -87,10 +85,10 @@ export function css(){
 
 export function js(){
     return gulp.src('./src/js/*.js')
-    .pipe(gulpIf(!argv.prod, changed('./dist/js/')))
+    // .pipe(gulpIf(!argv.prod, changed('./dist/js/')))
     .pipe(gulpIf(!argv.prod, plumber(plumberNotify('JS'))))
-    .pipe(babel())
-    //.pipe(gulpIf(argv.prod, concat('main.min.js')))
+    //.pipe(babel())
+    //.pipe(concat('main.js'))
     .pipe(webpack(webpackConfig))
     //.pipe(gulpIf(argv.prod, terser()))
     .pipe(gulp.dest('./dist/js/'))

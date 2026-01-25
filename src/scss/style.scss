@@ -1,9 +1,5 @@
-@import "base/meta";
-@import "base/reset";
-@import "base/fonts";
-@import "base/variables";
-@import "base/mixins";
-@import "base/globals";
-@import "base/helpers";
+@use "base" as *;
 
-@import "./blocks/*.scss";
+@use "components";
+
+@use "blocks";
