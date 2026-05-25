@@ -2,14 +2,16 @@ $container-padding-inline: 15px;
 $container-width: calc(1400px + $container-padding-inline * 2);
 $container-min-width: 320px;
 
-$font-family: 'Roboto', sans-serif;
-$font-size: 18px;
-$font-weight: 400;
-$line-height: 1.5;
-$transition: all .3s ease;
+$font-family: 'Golos Text', sans-serif;
+$font-family-second: 'Mulish', sans-serif;
+$font-size-mobile: 14px;
+$font-size-desk: 19px;
+$font-weight: 500;
+$line-height: 111%;
 
-$black: #262f34;
-$red: #f55449;
+$accent: #1c8e00;
+$font-color: #243628;
+$white: #fff;
 
 //breakpoints max-width
 $xs: 576px;

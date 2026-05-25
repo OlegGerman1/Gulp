@@ -1,13 +1,13 @@
 @use "variables" as *;
 
 @mixin media-max-width($width){
-    @media only screen and (max-width: $width) {
+    @media only screen and (max-width: ($width + 1px)) {
         @content;
     }
 }
 
 @mixin media-min-width($width){
-    @media only screen and (min-width: ($width + 1px)) {
+    @media only screen and (min-width: $width) {
         @content;
     }
 }
@@ -18,4 +18,10 @@
       @content;
     }
   }
+}
+
+@mixin media-min-max-width-landscape(){
+    @media screen and (min-width: 320px) and (max-width: 1000px) and (orientation: landscape){
+        @content;
+    }
 }
