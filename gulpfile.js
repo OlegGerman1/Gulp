@@ -29,11 +29,15 @@ const argv = yargs(hideBin(process.argv)).parse();
 
 const plumberNotify = (title) => {
 	return {
-		errorHandler: notify.onError({
-			title: title,
-			message: 'Error <%= error.message %>',
-			sound: false,
-		}),
+		errorHandler: function(error) {
+			notify.onError({
+				title: title,
+				message: 'Error <%= error.message %>',
+				sound: false,
+			})(error);
+			
+			this.emit('end');
+		}
 	};
 };
 
@@ -68,31 +72,29 @@ export function html(){
 
 export function css(){
     return gulp.src('./src/scss/style.scss')
-    .pipe(gulpIf(!argv.prod, changed('./dist/')))
     .pipe(gulpIf(!argv.prod, plumber(plumberNotify('SCSS'))))
     .pipe(gulpIf(!argv.prod, sourceMap.init({loadMaps: true})))
     .pipe(sass())
-    .pipe(autoprefixer({
+    .pipe(gulpIf(argv.prod, autoprefixer({
         overrideBrowserslist: ['last 3 versions'],
-    }))
+    })))
     .pipe(gulpIf(argv.prod, mediaQueries()))
     .pipe(gulpIf(argv.prod, csso()))
     .pipe(gulpIf(!argv.prod, sourceMap.write()))
     .pipe(gulp.dest('./dist/'))
-    //.pipe(gulp.dest('../'))
+    .pipe(gulp.dest('../'))
     .pipe(gulpIf(!argv.prod, browserSync.stream()));
 }
 
 export function js(){
     return gulp.src('./src/js/*.js')
-    // .pipe(gulpIf(!argv.prod, changed('./dist/js/')))
     .pipe(gulpIf(!argv.prod, plumber(plumberNotify('JS'))))
     //.pipe(babel())
     //.pipe(concat('main.js'))
     .pipe(webpack(webpackConfig))
     //.pipe(gulpIf(argv.prod, terser()))
     .pipe(gulp.dest('./dist/js/'))
-    //.pipe(gulp.dest('../js/'))
+    .pipe(gulp.dest('../js/'))
     .pipe(gulpIf(!argv.prod, browserSync.stream()))
 }
 
@@ -102,6 +104,7 @@ export function fonts(){
         .pipe(gulpIf(!argv.prod, changed('./dist/fonts/', { extension: '.woff2' })))
         .pipe(ttf2woff2())
         .pipe(gulp.dest('./dist/fonts/'))
+        .pipe(gulp.dest('../fonts/'))
         .pipe(gulpIf(!argv.prod, browserSync.stream()))
     }
     return Promise.resolve();
@@ -112,6 +115,7 @@ export function files(){
         return gulp.src('./src/files/**/*', { encoding: false })
         .pipe(gulpIf(!argv.prod, changed('./dist/files/')))
         .pipe(gulp.dest('./dist/files'))
+        .pipe(gulp.dest('../files'))
         .pipe(gulpIf(!argv.prod, browserSync.stream()))
     }
     return Promise.resolve();
@@ -122,6 +126,7 @@ export function imagesOrigin() {
         return gulp.src('./src/images/**/*.{webp,avif,svg}', { encoding: false })
         .pipe(gulpIf(!argv.prod, changed('./dist/images/', { hasChanged: compareContents })))
         .pipe(gulp.dest('./dist/images/'))
+        .pipe(gulp.dest('../images/'))
         .pipe(gulpIf(!argv.prod, browserSync.stream()));
     }
     return Promise.resolve();
@@ -136,6 +141,7 @@ export function imagesToWebp() {
             alphaQuality: 100
         }))
         .pipe(gulp.dest('./dist/images/'))
+        .pipe(gulp.dest('../images/'))
         .pipe(gulpIf(!argv.prod, browserSync.stream()));
     }
     return Promise.resolve();
